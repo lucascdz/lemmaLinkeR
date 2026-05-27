@@ -28,6 +28,7 @@ MatchResults_list <- CheckResults(ConlluData_df,LilaData_df,target_folder)
 
 # # # # # # # 
 # MATCH DONE #
+# in 12 sec. #
 # # # # # # # 
 'disambiguate'
 

@@ -130,10 +130,7 @@ MatchData <- function(ConlluData_df, LilaMatch_df, target_folder) {
     # sum(length(unique(SingleMatches_df$token_ctrl)),length(unique(AmbiguousMatches_df$token_ctrl)),length(unique(NoMatches_df$token_ctrl)))
     # save tsv in target folder
     write_tsv(SingleMatches_df, paste0(target_folder, 'singleMatches.tsv'))
-    write_tsv(
-        AmbiguousMatches_df,
-        paste0(target_folder, 'ambiguousMatches.tsv')
-    )
+    write_tsv(AmbiguousMatches_df,paste0(target_folder, 'ambiguousMatches.tsv'))
     write_tsv(NoMatches_df, paste0(target_folder, 'zeroMatches.tsv'))
 
     return(print('TSV files saved in target folder.'))
