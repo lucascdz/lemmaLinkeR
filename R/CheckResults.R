@@ -59,6 +59,72 @@ CheckResults <- function(ConlluData_df, LilaData_df, target_folder) {
         paste0(target_folder, 'matchreport.txt')
     )
 
+    # create match2 pairs for checking
+    match2checkpairs_df <- singleMatches_df[singleMatches_df$match == 2, ]
+    match2checkpairs_df <- unique(paste0(
+        match2checkpairs_df$lemma,
+        '_',
+        match2checkpairs_df$upos,
+        '_',
+        gsub(
+            'Gender=',
+            '',
+            str_extract(match2checkpairs_df$feats, 'Gender=\\w+')
+        ),
+        '_____',
+        match2checkpairs_df$label,
+        '_',
+        match2checkpairs_df$upostag,
+        '_',
+        match2checkpairs_df$gen
+    ))
+    match2checkpairs_df <- data.frame(
+        lila_label = gsub(
+            '^(.*)_(.*)_(.*)_____(.*)_(.*)_(.*)',
+            '\\4',
+            match2checkpairs_df
+        ),
+        lila_pos = gsub(
+            '^(.*)_(.*)_(.*)_____(.*)_(.*)_(.*)',
+            '\\5',
+            match2checkpairs_df
+        ),
+        lila_gen = gsub(
+            '^(.*)_(.*)_(.*)_____(.*)_(.*)_(.*)',
+            '\\6',
+            match2checkpairs_df
+        ),
+        conllu_gender = gsub(
+            '^(.*)_(.*)_(.*)_____(.*)_(.*)_(.*)',
+            '\\3',
+            match2checkpairs_df
+        ),
+        conllu_pos = gsub(
+            '^(.*)_(.*)_(.*)_____(.*)_(.*)_(.*)',
+            '\\2',
+            match2checkpairs_df
+        ),
+        conllu_lemma = gsub(
+            '^(.*)_(.*)_(.*)_____(.*)_(.*)_(.*)',
+            '\\1',
+            match2checkpairs_df
+        ),
+        stringsAsFactors = F
+    )
+    match2checkpairs_df <- match2checkpairs_df[
+        order(match2checkpairs_df$lila_label),
+    ]
+    match2checkpairs_df <- match2checkpairs_df[
+        order(match2checkpairs_df$lila_pos),
+    ]
+    match2checkpairs_df <- match2checkpairs_df[
+        order(match2checkpairs_df$lila_gen),
+    ]
+    write_tsv(
+        match2checkpairs_df,
+        paste0(target_folder, 'checkMatch2pairs.tsv')
+    )
+
     # create match1 pairs for checking
     match1checkpairs_df <- singleMatches_df[singleMatches_df$match == 1, ]
     match1checkpairs_df <- unique(paste0(
