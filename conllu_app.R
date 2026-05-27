@@ -4,7 +4,7 @@ library(udpipe)
 library(tidyverse)
 
 source_folder <- '~/@gmail.com/atomiclab/corpora/UD_Latin-LLCT/'
-target_folder <- gsub('/$', '-LOD/', source_folder)
+target_folder <- gsub('/$', '-Linking/', source_folder)
 system(paste0('mkdir ', target_folder))
 
 ## GET UD data
@@ -20,15 +20,15 @@ LilaMatch_df <- LilaData_list[['LilaMatch']]
 source('R/MatchData.R')
 MatchData(ConlluData_df,LilaMatch_df,target_folder)
 
+## CHECK match results
+source('R/CheckResults.R')
+LilaData_df <- LilaData_list[['LilaData']]
+MatchResults_list <- CheckResults(ConlluData_df,LilaData_df,target_folder)
 
 
-#
-#
-#
-#
-#
-#
-#
+#####
+2
+#####
 
 ## GET LiLa IDs
 ConllUlinks <- read.csv(
