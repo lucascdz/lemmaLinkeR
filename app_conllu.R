@@ -13,17 +13,19 @@ ConlluData_df <- GetConlluData(source_folder)
 
 ## GET LiLa data
 source('~/@gmail.com/atomiclab/lila_db/LilaDB_getData.R')
-LilaData_list <- GetLilaData()
-LilaMatch_df <- LilaData_list[['LilaMatch']]
+LilaDB_list <- GetLilaData()
+LilaData_df <- LilaDB_list[['LilaData']]
+LilaWrData_df <- LilaDB_list[['LilaWrData']]
 
-## MATCH data
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+## MATCH data (skip if you are already working on results)
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 source('R/MatchData.R')
-MatchData(ConlluData_df,LilaMatch_df,target_folder)
+MatchData(ConlluData_df,LilaWrData_df,target_folder)
 
-## CHECK match results
-source('R/CheckResults.R')
-LilaData_df <- LilaData_list[['LilaData']]
-MatchResults_list <- CheckResults(ConlluData_df,LilaData_df,target_folder)
+source('R/MatchResults.R')
+MatchResults_list <- MatchResults(ConlluData_df,LilaData_df,target_folder)
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 
 # # # # # # # 
